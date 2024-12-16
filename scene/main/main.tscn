@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5rb5ectoc47k"]
+
+[ext_resource type="PackedScene" uid="uid://c7lu8x44rfy1r" path="res://scene/userInterface/bg.tscn" id="1_g681l"]
+[ext_resource type="Script" path="res://scene/Object/pipe_spawner.gd" id="1_hp6no"]
+[ext_resource type="Script" path="res://scene/main/main.gd" id="1_wsnbn"]
+[ext_resource type="PackedScene" uid="uid://coomgi6ugb6xs" path="res://scene/Actor/player.tscn" id="2_viqxi"]
+[ext_resource type="AudioStream" uid="uid://cw70oqhfxpchu" path="res://assets/Music/point.ogg" id="3_edeyi"]
+[ext_resource type="PackedScene" uid="uid://cbqwk3g0drabq" path="res://scene/main/sky.tscn" id="4_wa5nw"]
+[ext_resource type="PackedScene" uid="uid://cjxy0elnj2iwt" path="res://scene/userInterface/hud.tscn" id="6_geane"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_38052"]
+size = Vector2(288, 64)
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wsnbn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -102
+
+[node name="pipe_spawner" type="Node2D" parent="CanvasLayer"]
+position = Vector2(360, 208)
+script = ExtResource("1_hp6no")
+
+[node name="Timer" type="Timer" parent="CanvasLayer/pipe_spawner"]
+
+[node name="PointScore" type="AudioStreamPlayer2D" parent="CanvasLayer/pipe_spawner"]
+stream = ExtResource("3_edeyi")
+
+[node name="bg" parent="." instance=ExtResource("1_g681l")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="bg"]
+position = Vector2(8, 408)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bg/StaticBody2D"]
+position = Vector2(136, 24)
+shape = SubResource("RectangleShape2D_38052")
+
+[node name="player" parent="." instance=ExtResource("2_viqxi")]
+position = Vector2(96, 208)
+
+[node name="sky" parent="." instance=ExtResource("4_wa5nw")]
+layer = -106
+
+[node name="HUD" parent="." instance=ExtResource("6_geane")]
+layout_mode = 1
+offset_top = -48.0
+offset_bottom = -48.0
+
+[connection signal="score_updated" from="CanvasLayer/pipe_spawner" to="HUD" method="_on_pipe_spawner_score_updated"]
+[connection signal="timeout" from="CanvasLayer/pipe_spawner/Timer" to="CanvasLayer/pipe_spawner" method="_on_timer_timeout"]
+[connection signal="gameover" from="player" to="." method="_on_gameover"]
+[connection signal="startGame" from="HUD" to="." method="_on_start_game"]

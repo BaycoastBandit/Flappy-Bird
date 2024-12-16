@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7lu8x44rfy1r"]
+
+[ext_resource type="Texture2D" uid="uid://cf7pwux0bjd07" path="res://assets/Sprite/FlappyAsset/background-1.png" id="1_1aimn"]
+[ext_resource type="Script" path="res://scene/userInterface/bg.gd" id="1_oaevb"]
+[ext_resource type="Texture2D" uid="uid://dnfya2d4ksfva" path="res://assets/Sprite/FlappyAsset/base.png" id="2_m6we8"]
+
+[node name="bg" type="ParallaxBackground"]
+script = ExtResource("1_oaevb")
+
+[node name="sky" type="ParallaxLayer" parent="."]
+visible = false
+motion_scale = Vector2(0.5, 1)
+motion_mirroring = Vector2(288, 0)
+
+[node name="sprite2d" type="Sprite2D" parent="sky"]
+position = Vector2(144, 256)
+texture = ExtResource("1_1aimn")
+
+[node name="floor" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(1.5, 1)
+motion_mirroring = Vector2(336, 0)
+
+[node name="sprite2d" type="Sprite2D" parent="floor"]
+position = Vector2(168, 456)
+texture = ExtResource("2_m6we8")

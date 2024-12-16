@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbqwk3g0drabq"]
+
+[ext_resource type="Script" path="res://scene/main/sky.gd" id="1_o6hsy"]
+[ext_resource type="Texture2D" uid="uid://cf7pwux0bjd07" path="res://assets/Sprite/FlappyAsset/background-1.png" id="1_rt3a5"]
+
+[node name="sky" type="ParallaxBackground"]
+script = ExtResource("1_o6hsy")
+
+[node name="sky" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 1)
+motion_mirroring = Vector2(288, 0)
+
+[node name="sprite2d" type="Sprite2D" parent="sky"]
+position = Vector2(144, 256)
+texture = ExtResource("1_rt3a5")
